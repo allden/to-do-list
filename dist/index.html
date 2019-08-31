@@ -4,18 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/style.css">
     <title>To Do List</title>
 </head>
 <body>
+    <div class="prompt project-prompt">
+        <form class="task-form">
+            <label for="project-title" class="center">Enter a Project Name</label>
+            <input type="text" id="project-title">
+            <button class="h-button submit-project">Create Project</button>
+        </form>
+    </div>
+    <div class="prompt task-prompt">
+        <form class="task-form">
+            <label for="title">Task Title</label>
+            <input type="text" id="title">
+            <label for="desc">Task Description</label>
+            <input type="text" id="desc">
+            <label for="date">Task Date</label>
+            <input type="date" id="date">
+            <label for="priority">Priority</label>
+            <select id="priority">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+            <button class="h-button new-task">Create Task</button>
+        </form>
+    </div>
     <div class="container">
         <div class="row">
-            <div class="column column-lv">
-                <ul class="project-list">
-
-                </ul>
+            <div class="column project-column">
+                <div class="inner-header">
+                    <h2>Project List</h2>
+                    <button class="button-circle new-project">+</button>
+                </div>
+                <hr>
+                <div class="project-list">
+                </div>
             </div>
-            <div class="column column-lv">
+            <div class="column task-column">
+                <div class="inner-header">
+                    <h2>Task List</h2>
+                    <button class="button-circle show-task-prompt">+</button>
+                </div>
+                <hr>
                 <div class="task-list">
                     
                 </div>

@@ -1,0 +1,203 @@
+/* main styling */
+:root {
+    --primary-color: #f4c53d;
+    --secondary-color: #8c732b;
+    --dark-color: #333;
+    --darker-color: #222;
+    --light-color: #eee;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100vh;
+    overflow: hidden;
+    color: var(--darker-color);
+    background: var(--dark-color);
+    font-family: 'Roboto', sans-serif;
+}
+
+ul {
+    list-style: none;
+}
+
+ul li {
+    padding: .5rem;
+    word-wrap: break-word;
+    line-height: 1.5;
+}
+
+/* utility */
+.center {
+    text-align: center;
+}
+
+.container {
+    margin: 5% auto;
+    width: 1200px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+h1,h2 {
+    margin: 1rem 2rem;
+}
+
+.prompt {
+    display: none;
+    position: absolute;
+    top: 25%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    background: var(--dark-color);
+    padding: 2rem;
+    width: 300px;
+}
+
+.task-prompt {
+    display: none;
+}
+
+.h-button {
+    margin: 1rem 0;
+    background: var(--primary-color);
+    border: 0;
+    color: var(--darker-color);
+}
+
+.h-button:hover {
+    background: var(--darker-color);
+    color: var(--primary-color);
+}
+
+.button {
+    padding: .5rem 1rem;
+    border: 0;
+    background: var(--dark-color);
+    color: var(--primary-color);
+    border-radius: 5px;
+}
+
+.button:hover {
+    background: var(--darker-color);
+}
+
+.button-circle {
+    width: 3rem;
+    margin: 1rem 2rem;
+    display: block;
+    border-radius: 100%;
+    border: none;
+    background-color: var(--dark-color);
+    color: var(--primary-color);
+    font-size: 2rem;
+}
+
+.button-circle:hover {
+    background-color: var(--darker-color);
+    color: var(--primary-color);
+}
+
+input {
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+}
+
+input:focus {
+    border: 1px solid var(--primary-color);
+}
+
+select {
+    margin-bottom: 1rem;
+}
+
+label {
+    color: var(--light-color);
+    margin-bottom: .5rem;
+}
+
+select, input, .h-button {
+    padding: .5rem;
+    border-radius: 5px;
+}
+
+
+/* columns */
+.column {
+    background-color: var(--secondary-color);
+    margin: 1rem;
+    height: 600px;
+    overflow: auto;
+}
+
+.project-column {
+    width: 40%;
+    
+}
+
+.task-column {
+    width: 60%;
+}
+
+
+/* specific */
+.task-form {
+    display: flex;
+    flex-direction: column;
+}
+.task-box, .project-name {
+    background-color: var(--primary-color);
+    margin: 1rem 2rem;
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.project-name:hover {
+    background-color: var(--dark-color);
+    color: var(--primary-color)
+}
+
+.project-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inner-header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: var(--primary-color);
+    background-image: linear-gradient(to right, var(--secondary-color), var(--primary-color), var(--secondary-color));
+}
+
+.task-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.details {
+    display: none;
+}
+
+.project-prompt input {
+    margin: .5rem 0 0 0;
+}
+
