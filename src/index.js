@@ -1,6 +1,6 @@
 import * as DOM from './dom.js';
 let domObj = DOM.domBox();
-let projHolder = [['Default', {title:'Press "Display" To See Details', description:'The + next to "Project List" adds a project, the + next to "Task List" adds a task. If you want to delete a project or a task, press the "x" or "delete" buttons.', dueDate:'N/A', priority:'High'}]];
+let projHolder = [['Default', {title:'Press "Display" To See Details', description:'The "+" next to "Project List" adds a project, the "+" next to "Task List" adds a task. If you want to delete a project or a task, press the "x" or "delete" buttons.', dueDate:'N/A', priority:'High'}]];
 let lastClicked = projHolder[0][0];
 
 const funcBox = () => {
@@ -201,7 +201,6 @@ const funcBox = () => {
     }
 
     const run = () => {
-        clearLocalStorage();
         loadLocalStorage();
         createProjectEvent();
         createTaskEvent();

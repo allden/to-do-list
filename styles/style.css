@@ -95,23 +95,6 @@ h1,h2 {
     background: var(--darker-color);
 }
 
-.button-circle {
-    width: 3rem;
-    margin: 1rem 2rem;
-    display: block;
-    border-radius: 100%;
-    border: none;
-    background-color: var(--dark-color);
-    color: var(--primary-color);
-    font-size: 2rem;
-    transition: 1s;
-}
-
-.button-circle:hover {
-    background-color: var(--darker-color);
-    color: var(--primary-color);
-}
-
 input {
     margin-bottom: 1rem;
     border: 1px solid transparent;
@@ -234,4 +217,10 @@ hr {
 .button-primary:hover {
     background: var(--darker-color);
     color: var(--primary-color);
+}
+
+.show-task-prompt, .new-project {
+    margin-right: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
