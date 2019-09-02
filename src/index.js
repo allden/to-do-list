@@ -1,18 +1,22 @@
 import * as DOM from './dom.js';
 let domObj = DOM.domBox();
-let projHolder = [];
-let lastClicked = 'default';
+let projHolder = [['Default', {title:'Press "Display" To See Details', description:'The + next to "Project List" adds a project, the + next to "Task List" adds a task. If you want to delete a project or a task, press the "x" or "delete" buttons.', dueDate:'N/A', priority:'High'}]];
+let lastClicked = projHolder[0][0];
 
 const funcBox = () => {
     let taskPromptBtn = document.querySelector('.show-task-prompt');
     let taskPromptWindow = document.querySelector('.task-prompt');
+    let taskForm = document.querySelector('.task-form');
     let newProjectBtn = document.querySelector('.new-project');
     let projectPromptWindow = document.querySelector('.project-prompt');
+    let projectForm = document.querySelector('.project-form');
+    let projListItems = document.getElementsByClassName('project-name');
     
     // pushes a  list item into the project with a given name
     const createProject = (projectName) => {
         projHolder.push([projectName]);
         showProjects();
+        console.log(projHolder);
     }
     
     // pushes an object based on the location
@@ -29,7 +33,6 @@ const funcBox = () => {
 
     // add the events for showAttr based on a list of the 'project-name' classes
     const showAttrEvent = () => {
-        let projListItems = document.getElementsByClassName('project-name');
         for(let i = 0; i < projListItems.length; i++) {
             projListItems[i].addEventListener('click', showAttributes);
         }
@@ -41,7 +44,13 @@ const funcBox = () => {
     const showAttributes = (e='') => {
         domObj.clearTaskList();
         if(e!=='') {
-            lastClicked = e.target.childNodes[0].textContent;        
+            lastClicked = e.target.childNodes[0].textContent;
+            for(let i = 0; i < projListItems.length; i++) {
+                projListItems[i].classList.remove('current');
+                projListItems[i].childNodes[1].classList.remove('button-primary');
+            }
+            e.target.classList.add('current');
+            e.target.childNodes[1].classList.add('button-primary');
         }
         for(let i = 0; i < projHolder.length; i++) {
             if(projHolder[i][0] === lastClicked) {
@@ -60,6 +69,7 @@ const funcBox = () => {
             domObj.appendToProjList(projHolder[i][0]);
         }
         showAttrEvent();
+        setFirstAsCurrent();
         deleteProjectEvent();
     }
 
@@ -68,12 +78,16 @@ const funcBox = () => {
         let newProjBtn = document.querySelector('.submit-project');
         
         newProjBtn.addEventListener('click', (e) => {
-            let title = document.getElementById('project-title').value;
-            createProject(title)
-            domObj.hidePrompt(projectPromptWindow, newProjectBtn);
-            deleteProjectEvent();
             e.preventDefault();
-            saveToLocalStorage();
+            let title = document.getElementById('project-title').value;
+            if(title.trim() !== '') {
+                createProject(title)
+                domObj.hideWindow(projectPromptWindow);
+                deleteProjectEvent();
+                saveToLocalStorage();
+            } else {
+                domObj.showError('Project name cannot be blank.', projectPromptWindow, projectForm);
+            }
         });
     }
 
@@ -85,17 +99,25 @@ const funcBox = () => {
         newTaskBtn.addEventListener('click', (e) => {
             e.preventDefault();
             // basic variables
-            let title = document.getElementById('title').value;
-            let description = document.getElementById('desc').value;
-            let dueDate = document.getElementById('date').value;
-            let priority = document.getElementById('priority').value;
-            createTask(lastClicked, title, description, dueDate, priority );
-            domObj.appendToTaskList(title, description, dueDate, priority )
+            let title = document.getElementById('title');
+            let description = document.getElementById('desc');
+            let dueDate = document.getElementById('date');
+            let priority = document.getElementById('priority');
+            if(description.value.trim() === '' && title.value.trim() === '') {
+                domObj.showError('Please fill out the title and description inputs.', taskPromptWindow, taskForm);
+            } else if(description.value.trim() === '') {
+                domObj.showError('Please fill out the description input.', taskPromptWindow, taskForm);
+            } else if(title.value.trim() === '') {
+                domObj.showError('Please fill out the title input.', taskPromptWindow, taskForm);
+            } else {
+                createTask(lastClicked, title.value, description.value, dueDate.value, priority.value );
+                domObj.appendToTaskList(title.value, description.value, dueDate.value, priority.value )
+                domObj.displayDetailsEvent();
+                domObj.hideWindow(taskPromptWindow);
+                deleteTaskEvent();
+                saveToLocalStorage();            
+            }
             // after we've submitted our task, the window closes
-            domObj.hidePrompt(taskPromptWindow, taskPromptBtn);
-            domObj.displayDetailsEvent();
-            deleteTaskEvent();
-            saveToLocalStorage();            
         });
 
     }
@@ -163,27 +185,34 @@ const funcBox = () => {
     }
 
     const loadLocalStorage = () => {
-        if(localStorage.projHolder) {
+        if(localStorage.getItem('projHolder')) {
             projHolder = JSON.parse(localStorage.getItem('projHolder'));
         }
-        console.log(projHolder);
     }
 
     const clearLocalStorage = () => {
         localStorage.clear();
     }
 
+    const setFirstAsCurrent = () => {
+        projListItems[0].classList.add('current');
+        projListItems[0].childNodes[1].classList.add('button-primary');
+        lastClicked = projHolder[0][0];
+    }
+
     const run = () => {
+        clearLocalStorage();
         loadLocalStorage();
         createProjectEvent();
         createTaskEvent();
-        domObj.showWindowEvent(taskPromptWindow, taskPromptBtn);
-        domObj.showWindowEvent(projectPromptWindow, newProjectBtn);
-        // createProject('default');
-        // createTask('default', 'How To Use', 'The + next to "Project List" adds a project, the + next to "Task List" adds a task. If you want to delete a project or a task, press the "x" buttons.', 'N/A', 'High')
+        taskPromptBtn.addEventListener('click', (e) => {domObj.taskToggler(taskPromptWindow)});
+        newProjectBtn.addEventListener('click', (e) => {domObj.projectToggler(projectPromptWindow)});
         showProjects();
         showAttributes();
-        // clearLocalStorage();
+        if(projHolder !== undefined && projHolder.length >= 1) {
+            setFirstAsCurrent();
+        }
+        console.log(projHolder);
     }
     
     return { run }

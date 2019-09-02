@@ -1,7 +1,7 @@
 /* main styling */
 :root {
-    --primary-color: #f4c53d;
-    --secondary-color: #8c732b;
+    --primary-color: #e3b959;
+    --secondary-color: #8c7749;
     --dark-color: #333;
     --darker-color: #222;
     --light-color: #eee;
@@ -59,8 +59,10 @@ h1,h2 {
     margin-left: auto;
     margin-right: auto;
     background: var(--dark-color);
-    padding: 2rem;
+    padding: 1.5rem;
     width: 300px;
+    border-top: 1px solid var(--primary-color);
+    border-bottom: 1px solid var(--primary-color);
 }
 
 .task-prompt {
@@ -72,6 +74,7 @@ h1,h2 {
     background: var(--primary-color);
     border: 0;
     color: var(--darker-color);
+    transition: 1s;
 }
 
 .h-button:hover {
@@ -85,6 +88,7 @@ h1,h2 {
     background: var(--dark-color);
     color: var(--primary-color);
     border-radius: 5px;
+    transition: .5s;
 }
 
 .button:hover {
@@ -100,6 +104,7 @@ h1,h2 {
     background-color: var(--dark-color);
     color: var(--primary-color);
     font-size: 2rem;
+    transition: 1s;
 }
 
 .button-circle:hover {
@@ -130,7 +135,13 @@ select, input, .h-button {
     border-radius: 5px;
 }
 
+.invisible { 
+    display: none;
+}
 
+.visible {
+    display: 'block';
+}
 /* columns */
 .column {
     background-color: var(--secondary-color);
@@ -148,12 +159,24 @@ select, input, .h-button {
     width: 60%;
 }
 
+.error {
+    max-height: 60px;
+    margin-bottom: .5rem;
+    padding: .5rem;
+    background: var(--primary-color);
+    color: var(--darker-color);
+    text-align: center;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
 
 /* specific */
-.task-form {
+.task-form,
+.project-form {
     display: flex;
     flex-direction: column;
 }
+
 .task-box, .project-name {
     background-color: var(--primary-color);
     margin: 1rem 2rem;
@@ -170,6 +193,7 @@ select, input, .h-button {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: .5s;
 }
 
 .inner-header {
@@ -193,11 +217,21 @@ hr {
     align-items: center;
 }
 
-.details {
-    display: none;
-}
-
 .project-prompt input {
     margin: .5rem 0 0 0;
 }
 
+.current {
+    background: var(--dark-color);
+    color: var(--primary-color);
+}
+
+.button-primary {
+    background: var(--primary-color);
+    color: var(--dark-color);
+}
+
+.button-primary:hover {
+    background: var(--darker-color);
+    color: var(--primary-color);
+}

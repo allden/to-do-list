@@ -1,6 +1,8 @@
 const domBox = () => {
     let projList = document.querySelector('.project-list');
     let taskList = document.querySelector('.task-list');
+    let taskPromptActive = false;
+    let projPromptActive = false;
     
     const appendToProjList = (projName) => {
         projList.innerHTML += `<div class="project-name"><p>${projName}</p><button class="button delete-project">x</button></div>`;
@@ -17,7 +19,7 @@ const domBox = () => {
                 </div>
             </div>
             <ul class="task">
-                <div class="details">
+                <div class="details invisible">
                 <li><strong>Description</strong>: ${description}</li>
                 <li><strong>Date due</strong>: ${dueDate}</li>
                 <li><strong>Priority</strong>: ${priority}</li>
@@ -36,56 +38,80 @@ const domBox = () => {
     }
 
     // in this case prompt is the div that is shown and btn is the button that will be clicked
-    const showPrompt = (prompt, btn) => {
-        btn.removeEventListener('click', () => {
-            showPrompt(prompt, btn);
-        });
-        btn.addEventListener('click', () => {
-            hidePrompt(prompt, btn);
-        });
-        prompt.style.display = "block";
+    const taskToggler = (window) => {
+        if(taskPromptActive === false && projPromptActive === false) {
+            // do this
+            window.style.display = 'block';
+            console.log(window);
+            taskPromptActive = true;
+            console.log('hello');
+        } else {
+            // do this
+            console.log(window);
+            window.style.display = 'none';
+            taskPromptActive = false;
+            console.log('hello');
+        }
     }
 
-    const hidePrompt = (prompt, btn) => {
-        btn.removeEventListener('click', () => {
-            hidePrompt(prompt, btn);
-        });
-        btn.addEventListener('click', () => {
-            showPrompt(prompt, btn);
-        });
-        prompt.style.display = "none";
+    const projectToggler = (window) => {
+        if(projPromptActive === false && taskPromptActive === false) {
+            // do this
+            window.style.display = 'block';
+            console.log(window);
+            projPromptActive = true;
+            console.log('hello');
+        } else {
+            // do this
+            console.log(window);
+            window.style.display = 'none';
+            projPromptActive = false;
+            console.log('hello');
+        }
     }
 
-    const showWindowEvent = (prompt, btn) => {
-        btn.addEventListener('click', () => {
-            showPrompt(prompt, btn);
-        });
+    const hideWindow = (window) => {
+        window.style.display = 'none';
+        taskPromptActive = false;
+        projPromptActive = false;
     }
 
     const displayDetailsEvent = () => {
         let displayButtons = document.getElementsByClassName('display');
         for(let i = 0; i < displayButtons.length; i++) {
-            displayButtons[i].addEventListener('click', () => displayDetails(i));
+            displayButtons[i].addEventListener('click', (e) => 
+            {
+                if(e.target.parentElement.parentElement.parentElement.childNodes[3].childNodes[1].classList.contains('visible') === false) {
+                    displayButtons[i].textContent = 'Hide';
+                    e.target.parentElement.parentElement.parentElement.childNodes[3].childNodes[1].classList.remove('invisible');
+                    e.target.parentElement.parentElement.parentElement.childNodes[3].childNodes[1].classList.add('visible');
+                    console.log(e.target.parentElement.parentElement.parentElement.childNodes[3].childNodes[1]);
+                } else {
+                    displayButtons[i].textContent = 'Display';
+                    e.target.parentElement.parentElement.parentElement.childNodes[3].childNodes[1].classList.remove('visible');
+                    e.target.parentElement.parentElement.parentElement.childNodes[3].childNodes[1].classList.add('invisible');
+                    console.log(e.target.parentElement.parentElement.parentElement.childNodes[3].childNodes[1]);
+                }
+            });
         }
     }
 
-    const displayDetails = (i) => {
-        let details = document.getElementsByClassName('details');
-        let displayButtons = document.getElementsByClassName('display');
-        displayButtons[i].addEventListener('click', () => hideDetails(i));
-        displayButtons[i].removeEventListener('click', () => displayDetails(i));
-        details[i].style.display = 'block';
+    const showError = (msg, container, beforeElement) => {
+        let prompt = container;
+        let taskForm = beforeElement;
+        let errorBox = document.createElement('div');
+        errorBox.classList.add('error');
+        let textNode = document.createTextNode(msg);
+        errorBox.appendChild(textNode);        
+        prompt.insertBefore(errorBox, taskForm);
+        setTimeout(hideError, 2000);
     }
 
-    const hideDetails = (i) => {
-        let details = document.getElementsByClassName('details');
-        let displayButtons = document.getElementsByClassName('display');
-        displayButtons[i].addEventListener('click', () => displayDetails(i));
-        displayButtons[i].removeEventListener('click', () => hideDetails(i));
-        details[i].style.display = 'none';
+    const hideError = () => {
+        document.querySelector('.error').remove();
     }
 
-    return { appendToProjList, appendToTaskList, clearTaskList, showWindowEvent, displayDetailsEvent, hidePrompt, clearProjList } 
+    return { appendToProjList, appendToTaskList, clearTaskList, displayDetailsEvent, clearProjList, taskToggler, projectToggler, hideWindow, showError } 
 }
 
 export { domBox }
