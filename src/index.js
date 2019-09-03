@@ -1,7 +1,8 @@
 import * as DOM from './dom.js';
 let domObj = DOM.domBox();
-let projHolder = [['Default', {title:'Press "Display" To See Details', description:'The "+" next to "Project List" adds a project, the "+" next to "Task List" adds a task. If you want to delete a project or a task, press the "x" or "delete" buttons.', dueDate:'N/A', priority:'High'}]];
-let lastClicked = projHolder[0][0];
+let projHolder;
+JSON.parse(localStorage.getItem('projHolder')).length >= 1 ? projHolder = JSON.parse(localStorage.getItem('projHolder')) : projHolder = [['Default', {title:'Press "Display" To See Details', description:'The "+" next to "Project List" adds a project, the "+" next to "Task List" adds a task. If you want to delete a project or a task, press the "x" or "delete" buttons.', dueDate:'N/A', priority:'High'}]];
+let lastClicked = projHolder[0][0] || 'default';
 
 const funcBox = () => {
     let taskPromptBtn = document.querySelector('.show-task-prompt');
@@ -16,7 +17,6 @@ const funcBox = () => {
     const createProject = (projectName) => {
         projHolder.push([projectName]);
         showProjects();
-        console.log(projHolder);
     }
     
     // pushes an object based on the location
@@ -180,28 +180,15 @@ const funcBox = () => {
 
     const saveToLocalStorage = () => {
         localStorage.setItem('projHolder', JSON.stringify(projHolder));
-        console.log(localStorage.projHolder);
-        console.log(projHolder);
-    }
-
-    const loadLocalStorage = () => {
-        if(localStorage.getItem('projHolder')) {
-            projHolder = JSON.parse(localStorage.getItem('projHolder'));
-        }
-    }
-
-    const clearLocalStorage = () => {
-        localStorage.clear();
     }
 
     const setFirstAsCurrent = () => {
         projListItems[0].classList.add('current');
-        projListItems[0].childNodes[1].classList.add('button-primary');
+        projListItems[0].childNodes[1].classList.add('button-primary'); 
         lastClicked = projHolder[0][0];
     }
 
     const run = () => {
-        loadLocalStorage();
         createProjectEvent();
         createTaskEvent();
         taskPromptBtn.addEventListener('click', (e) => {domObj.taskToggler(taskPromptWindow)});
@@ -211,7 +198,11 @@ const funcBox = () => {
         if(projHolder !== undefined && projHolder.length >= 1) {
             setFirstAsCurrent();
         }
-        console.log(projHolder);
+        removeFirstDelete();
+    }
+
+    const removeFirstDelete = () => {
+        projListItems[0].childNodes[1].style.visibility = 'hidden';
     }
     
     return { run }

@@ -42,15 +42,11 @@ const domBox = () => {
         if(taskPromptActive === false && projPromptActive === false) {
             // do this
             window.style.display = 'block';
-            console.log(window);
             taskPromptActive = true;
-            console.log('hello');
         } else {
             // do this
-            console.log(window);
             window.style.display = 'none';
             taskPromptActive = false;
-            console.log('hello');
         }
     }
 
@@ -58,15 +54,11 @@ const domBox = () => {
         if(projPromptActive === false && taskPromptActive === false) {
             // do this
             window.style.display = 'block';
-            console.log(window);
             projPromptActive = true;
-            console.log('hello');
         } else {
             // do this
-            console.log(window);
             window.style.display = 'none';
             projPromptActive = false;
-            console.log('hello');
         }
     }
 
@@ -85,12 +77,12 @@ const domBox = () => {
                     displayButtons[i].textContent = 'Hide';
                     e.target.parentElement.parentElement.parentElement.childNodes[3].childNodes[1].classList.remove('invisible');
                     e.target.parentElement.parentElement.parentElement.childNodes[3].childNodes[1].classList.add('visible');
-                    console.log(e.target.parentElement.parentElement.parentElement.childNodes[3].childNodes[1]);
+    
                 } else {
                     displayButtons[i].textContent = 'Display';
                     e.target.parentElement.parentElement.parentElement.childNodes[3].childNodes[1].classList.remove('visible');
                     e.target.parentElement.parentElement.parentElement.childNodes[3].childNodes[1].classList.add('invisible');
-                    console.log(e.target.parentElement.parentElement.parentElement.childNodes[3].childNodes[1]);
+    
                 }
             });
         }
