@@ -21,7 +21,7 @@ const domBox = () => {
             <ul class="task">
                 <div class="details invisible">
                 <li><strong>Description</strong>: ${description}</li>
-                <li><strong>Date due</strong>: ${dueDate}</li>
+                <li><strong>Date due</strong>: ${dueDate.toString()}</li>
                 <li><strong>Priority</strong>: ${priority}</li>
                 </div>
             </ul>
